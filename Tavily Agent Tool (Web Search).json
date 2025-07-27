@@ -1,0 +1,238 @@
+{
+  "name": "Tavily Agent Tool (Web Search)",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -60,
+        0
+      ],
+      "id": "6f4a863d-4382-4abe-985f-8c538364a633",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{ $json.chatInput }}\",\n  \"search_depth\": \"basic\",\n  \"include_answer\": true,\n  \"include_raw_content\": true,\n  \"max_results\": 3\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        140,
+        340
+      ],
+      "id": "5673c7b4-8445-4064-849a-e453cb2d314f",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "JuzLvslqg2LzevTD",
+          "name": "Header Auth account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -20,
+        340
+      ],
+      "id": "7df7a03e-cf4e-4599-bfde-cae5ef9a8e98",
+      "name": "When chat message received",
+      "webhookId": "302ee717-7809-44b8-bf77-5f4460c7dfae",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fb0f769-cf0a-4384-964c-735563a626c4",
+              "name": "Response",
+              "value": "=[Source 1]\ntitle:  {{ $json.results[0].title }}\nURL: {{ $json.results[0].url }}\nContent: {{ $json.results[0].content }}\n\n[Source 2]\ntitle:  {{ $json.results[1].title }}\nURL: {{ $json.results[1].url }}\nContent: {{ $json.results[1].content }}\n\n[Source 3]\ntitle:  {{ $json.results[2].title }}\nURL: {{ $json.results[2].url }}\nContent: {{ $json.results[2].content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        340
+      ],
+      "id": "ebe4732b-53a7-48b6-9804-1ab510d207c4",
+      "name": "Edit Fields",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## TEST",
+        "height": 240,
+        "width": 760
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        300
+      ],
+      "id": "518f9b77-701c-4dda-be39-a2a2b6009f03",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"query\": \"{{ $json.query.replace(/\\\"/g, '\\\\\\\"') }}\",\n  \"search_depth\": \"basic\",\n  \"include_answer\": true,\n  \"include_raw_content\": true,\n  \"max_results\": 3\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        140,
+        0
+      ],
+      "id": "c9220a87-61c7-4cc9-9283-e1d43f9c4c0a",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "JuzLvslqg2LzevTD",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fb0f769-cf0a-4384-964c-735563a626c4",
+              "name": "Response",
+              "value": "=[Source 1]\ntitle:  {{ $json.results[0].title }}\nURL: {{ $json.results[0].url }}\nContent: {{ $json.results[0].content }}\n\n[Source 2]\ntitle:  {{ $json.results[1].title }}\nURL: {{ $json.results[1].url }}\nContent: {{ $json.results[1].content }}\n\n[Source 3]\ntitle:  {{ $json.results[2].title }}\nURL: {{ $json.results[2].url }}\nContent: {{ $json.results[2].content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        340,
+        0
+      ],
+      "id": "1ee067f0-7926-4bc1-a968-4ac0c54bf32b",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "content": "## Tavily Agent Tool (Web Search)",
+        "height": 300,
+        "width": 860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        -80
+      ],
+      "id": "7f48354b-224e-434a-a742-70a0cda01f30",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a8477668-1659-4512-ae97-632de20c8dcb",
+  "meta": {
+    "instanceId": "9c6f883eb615917309290f122969cf5461067ac52caa9cee595122dc92ab9dcd"
+  },
+  "id": "jcAJiEuLweN8FNjK",
+  "tags": []
+}

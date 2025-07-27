@@ -1,0 +1,270 @@
+{
+  "name": "Form_sheet_Schedule_meeting_AI Agent_web search  (Using Tavily Agent Tool)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 獲取會議通知\n當顧客確認會議時間時觸發\n",
+        "height": 520,
+        "width": 440
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -160
+      ],
+      "id": "9a97b9d5-f5cc-4b58-8840-acfaf76aaa35",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "545c914b-8cba-43b6-b8a6-9960300be7e9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        20
+      ],
+      "id": "44f995ca-d343-4994-b68f-1408935c6320",
+      "name": "Webhook",
+      "webhookId": "545c914b-8cba-43b6-b8a6-9960300be7e9"
+    },
+    {
+      "parameters": {
+        "content": "## AI研究助理 (使用 Tavily Web Tool)\n",
+        "height": 520,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -160
+      ],
+      "id": "3ec91ce6-4e4f-4186-86be-5fbd8f5f0984",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=## 客戶資訊\n姓名：{{ $json['姓氏'] }}{{ $json['名子'] }}\nEmail：{{ $json.Email }}  \n預算：{{ $json['預算'] }}  \n需求：{{ $json['需求'] }}\n\n---\n\n## 任務\n請依照下列需求產出一份 HTML 結構良好的「會議前研究摘要」報告，包含：\n\n1. 針對客戶需求擬定初步研究架構\n2. 使用 Tavily 工具搜尋與主題相關的最新資訊\n3. 引用具參考性的外部來源，並用 HTML 方式展示\n4. 提出 AI 工具是否適合該公司導入的初步建議",
+        "options": {
+          "systemMessage": "=## 角色\n你是一名專業研究助理，負責協助準備潛在客戶的預先研究報告。\n\n## 工具\n你會使用 Tavily 工具從網路獲取並引用資訊(不超過三次搜尋)，請確保資料可靠且明確註明出處。\n\n## 引用格式與輸出要求（務必遵守）\n請輸出清晰的 HTML 結構，分為數個區塊，包含以下內容：\n- <h2> 標題：每段使用說明性標題\n- <p> 段落：清楚分段說明內容\n- <ul>/<ol>：條列重點資訊時請使用無序/有序清單\n- <blockquote> Tavily 摘要：使用區塊標籤框住引用內容\n- <a href=\"[URL]\">來源名稱</a>：引用外部來源時需使用 HTML 超連結格式\n- <table> 表格：當需列出條件、分類等結構性資料時，請使用表格清楚展示\n- 所有內容須條理分明，不能雜亂堆疊\n\n## 報告風格\n- 報告語氣專業、簡潔、具條理\n- 每段前面可加 emoji 或符號以提升可讀性（如 📌、🧠、📋）\n- 適當換行、不要整段擠在一起\n\n## 輸出語言\n請使用 **繁體中文**\n\n## 實際案例格式參考（僅供結構參考）\n\n<h2>📌 研究需求摘要</h2>\n<p>針對客戶公司「康師傅」，我們評估其 AI 工具庫導入的可行性。</p>\n<ul>\n  <li><strong>產業類型：</strong>軟體服務業</li>\n  <li><strong>技術應用需求：</strong>需能支援內部流程自動化</li>\n</ul>\n\n<h2>🧩 客戶挑戰與痛點</h2>\n<ol>\n  <li>目前資訊系統無法支援跨部門協作</li>\n  <li>對 AI 工具缺乏導入經驗</li>\n</ol>\n\n<h2>🧠 Tavily 網路摘要</h2>\n<p>以下為 Tavily 工具從網路擷取的研究內容摘要：</p>\n<blockquote>\n  根據經濟部 2024 年白皮書，超過 78% 中小企業在導入 AI 工具時會考量系統相容性與使用者學習曲線。...<br>\n  來源：<a href=\"https://...\">經濟部 AI 導入白皮書</a>\n</blockquote>\n\n<h2>🔗 參考來源</h2>\n<ul>\n  <li><a href=\"https://example.com/file1.pdf\">AI 工具簡介與應用指南</a></li>\n  <li><a href=\"https://example.com/file2.pdf\">AI 補助政策白皮書</a></li>\n</ul>\n\n<h2>📋 評估條件（表格）</h2>\n<table border=\"1\" cellpadding=\"6\">\n  <tr><th>項目</th><th>條件</th></tr>\n  <tr><td>資料處理能力</td><td>具備數據清理與預測模組</td></tr>\n  <tr><td>技術支援</td><td>需有外部顧問支援</td></tr>\n</table>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        540,
+        20
+      ],
+      "id": "5a74bef9-1ac6-43a5-a184-7562265ba9bc",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        540,
+        220
+      ],
+      "id": "a2fb1d03-7c9d-4656-a3bd-beb85224b541",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "PrWhfyoEy4g6OEam",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA",
+          "mode": "list",
+          "cachedResultName": "線上需求表單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "工作表1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{ $json.body.payload.attendees[0].email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        200,
+        20
+      ],
+      "id": "57e6e174-d62e-4552-adcc-8177703a2ff8",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7EJyKJoBF5cGOBxU",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Web Search",
+        "workflowId": {
+          "__rl": true,
+          "value": "jcAJiEuLweN8FNjK",
+          "mode": "list",
+          "cachedResultName": "Tavily Agent Tool (Web Search)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        700,
+        220
+      ],
+      "id": "5855562e-3aae-4572-86f3-437a13f12d85",
+      "name": "Tavily Tool"
+    },
+    {
+      "parameters": {
+        "content": "## 會議信件準備通知\n",
+        "height": 520,
+        "width": 260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        -160
+      ],
+      "id": "701ff8f4-dec5-42a8-a53e-8706d02466eb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "sendTo": "aasdfghjkl129574ytw@gmail.com",
+        "subject": "= {{ $('Get row(s) in sheet').item.json['姓氏'] }}{{ $('Get row(s) in sheet').item.json['名子'] }}  會議準備通知 + 會議準備資料",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1020,
+        20
+      ],
+      "id": "eb596f38-17e9-4363-8dd1-7fb0ccf62ecb",
+      "name": "Send a message",
+      "webhookId": "95443f15-bf1b-459d-8c2f-b37df4f520b4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IZhpmX0qWCgpf9yF",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "947083c9-ef02-4a40-81ba-60a11cf9826a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9c6f883eb615917309290f122969cf5461067ac52caa9cee595122dc92ab9dcd"
+  },
+  "id": "eamkDFrZD2HH88jO",
+  "tags": []
+}

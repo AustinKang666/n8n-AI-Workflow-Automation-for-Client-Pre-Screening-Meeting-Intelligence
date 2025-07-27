@@ -1,0 +1,1063 @@
+{
+  "name": "Form_sheet_Schedule_meeting_AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 表單\n",
+        "height": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -700,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "96df5c97-69dc-4532-9b69-0103beb2bbf6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## google sheet\n",
+        "height": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -400,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "2b9a8710-5c3a-44a2-a294-73ecc0925261",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 預算過濾\n",
+        "height": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -100,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "c88847c1-4863-4e0a-bc3b-b1cf0b256b5c",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 預算分流\n",
+        "height": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        200,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "ea516fc6-8728-4d7b-bb2f-6ef85acf1a7c",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## 接洽信件\n",
+        "height": 240,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1240,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "f82f1af0-ad04-488e-84b6-807c1b842f09",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## 追蹤信件\n",
+        "height": 220,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1240,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "7b5c26eb-16d1-4551-9a05-bfd6ec5490a0",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## 團隊通知信\n",
+        "height": 280,
+        "width": 500,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1600,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "fa81ee59-8d9f-4ed4-87c6-2bd771253645",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "formTitle": "Contact us",
+        "formDescription": "需求、預算都需確實填寫",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "名子",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "姓氏",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Budget",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "0-200 USD"
+                  },
+                  {
+                    "option": "200-1000 USD"
+                  },
+                  {
+                    "option": "1000+ USD"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "需求",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -620,
+        20
+      ],
+      "id": "fca35acb-1740-4723-8be0-54294cc029b1",
+      "name": "On form submission",
+      "webhookId": "6cd4a0cc-93ff-4065-b003-df75b27b1c08"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA",
+          "mode": "list",
+          "cachedResultName": "線上需求表單",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "工作表1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1N5fa4miCt5wj7xMB7bDSBAF7IO4HkuFhmM_mt1TNTxA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}",
+            "名子": "={{ $json['名子'] }}",
+            "姓氏": "={{ $json['姓氏'] }}",
+            "預算": "={{ $json.Budget }}",
+            "需求": "={{ $json['需求'] }}",
+            "Date": "={{ $now.format('yyyy-MM-dd') }}",
+            "拒絕": "={{ $json.Budget === \"0-200 USD\" ? \"TRUE\" : \"FALSE\" }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "名子",
+              "displayName": "名子",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "姓氏",
+              "displayName": "姓氏",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "預算",
+              "displayName": "預算",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "需求",
+              "displayName": "需求",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "拒絕",
+              "displayName": "拒絕",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -340,
+        20
+      ],
+      "id": "8eb4c455-d91d-4eff-9100-4352c1672e62",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7EJyKJoBF5cGOBxU",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6118f76-b842-4149-a840-788bc339ce03",
+              "leftValue": "={{ $json['預算'] }}",
+              "rightValue": "0-200 USD",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -40,
+        20
+      ],
+      "id": "71889096-524e-4428-ba6d-51cd8f8fbcbe",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['預算'] }}",
+                    "rightValue": "1000+ USD",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "adc1f2b2-44e8-4ea2-9360-f92aa150e748"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "30c32e90-1a7f-416b-abb3-56f3ffe668d5",
+                    "leftValue": "={{ $json['預算'] }}",
+                    "rightValue": "200-1000 USD",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        260,
+        20
+      ],
+      "id": "52eeb76d-c9b2-4594-ba7d-947be471b4a7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Filter').item.json.Email }}",
+        "subject": "={{ $('Filter').item.json['姓氏'] }}{{ $('Filter').item.json['名子'] }}已收到您的需求，我們將安排團隊進行接洽",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        160
+      ],
+      "id": "064dbc9a-7f46-4b02-9fa4-5fac64d577a9",
+      "name": "Send a message",
+      "webhookId": "2bf2d475-af28-4ea5-a76f-ce362494c8b5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IZhpmX0qWCgpf9yF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Switch').item.json.Email }}",
+        "subject": "={{ $('Switch').item.json['姓氏'] }}{{ $('Switch').item.json['名子'] }}已收到您的需求，我們將安排團隊進行接洽",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        -80
+      ],
+      "id": "d6d57d90-b6c0-4ca8-9853-d85505f4eb23",
+      "name": "Send a message1",
+      "webhookId": "e59b4ee2-3c98-4e11-a18a-c39bb527c4ef",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IZhpmX0qWCgpf9yF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1680,
+        20
+      ],
+      "id": "cf84bb81-ec85-4353-9089-a188e6c504ca",
+      "name": "Merge",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "austin.math.666@gmail.com",
+        "subject": "新需求通知",
+        "emailType": "text",
+        "message": "=姓名: {{ $('Switch').item.json['姓氏'] }}{{ $('Switch').item.json['名子'] }}\n預算: {{ $('Switch').item.json['預算'] }}\n需求: {{ $('Switch').item.json['需求'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1900,
+        20
+      ],
+      "id": "e29829dc-1fda-4455-aa13-bce133fc6ff6",
+      "name": "Send a message2",
+      "webhookId": "7b2d2a17-9909-4fbf-9371-2ae548bdf5a9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IZhpmX0qWCgpf9yF",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## AI Agent 寫信\n",
+        "height": 1220,
+        "width": 680,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        500,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "64218d50-3b39-4395-88cf-3850a7fad28f",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=姓名：{{ $json['名子'] }}{{ $json[\"姓氏\"] }} \n預算：{{ $json[\"預算\"] }} \n需求：{{ $json[\"需求\"] }}\n會議連結: https://cal.com/kang-austin-syd6ja/30min\n\n客戶已經填寫了我們的表格，我希望您寫一封包含行事曆連結的後續電子郵件。該客戶的預算超過 1000 美元，我們將其視為優先客戶。請撰寫一封簡短的電子郵件，使用Company Services內的資訊，並提出三個簡短問題釐清需求中較模糊的環節，讓他點選行事曆連結並與我們聯繫。",
+        "options": {
+          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容。\n- 輸出我不希望看到```html 等會影響收件者觀感的部分\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -80
+      ],
+      "id": "5bc6f64d-2452-418f-91f2-ac5b8819c25b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        1200
+      ],
+      "id": "da3fc72c-c1a5-4dc7-a7af-702f83ab12c2",
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        20,
+        1200
+      ],
+      "id": "3bb6717a-8947-4a4d-b3d4-2206ab2a2a5a",
+      "name": "Extract from File",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -200,
+        1200
+      ],
+      "id": "1d376723-5430-453e-acbb-f6d49a6f64df",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YEl5XwMt6rvBwQ9N",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": ".pdf",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1KI3QssQsBW_X2skenqyD08hSJlFfC6N3",
+            "mode": "list",
+            "cachedResultName": "n8n_RAG",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1KI3QssQsBW_X2skenqyD08hSJlFfC6N3"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -400,
+        1200
+      ],
+      "id": "7debcf67-5a47-4822-ba7b-1ba1eecbdcd0",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YEl5XwMt6rvBwQ9N",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        220,
+        1200
+      ],
+      "id": "57295750-810a-4c60-b00b-22ade6f71e5c",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "veqmop5bNcr1x4wZ",
+          "name": "PineconeApi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        1420
+      ],
+      "id": "fdb5e01f-f77f-42ce-9dd7-86387303b28a",
+      "name": "Default Data Loader",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        220,
+        1420
+      ],
+      "id": "ee2b8fa4-0059-4c13-82eb-7ae1c8461c76",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "hUfi6i9Jf0VuFQbc",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## 建立Vector Store(Pinecone)_建立一次即可\n",
+        "height": 500,
+        "width": 1300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -680,
+        1120
+      ],
+      "id": "5520374f-9346-41b0-bc77-f35173674942",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=姓名：{{ $json['名子'] }}{{ $json[\"姓氏\"] }} \n預算：{{ $json[\"預算\"] }} \n需求：{{ $json[\"需求\"] }}\n會議連結: https://cal.com/kang-austin-syd6ja/30min\n\n客戶已經填寫了我們的報價，我希望您寫一封包含行事曆連結的後續電子郵件。該客戶的預算雖然沒有達到超過 1000 美元的門檻但有 200–1000 美元，我們將其視為潛在客戶。請撰寫一封簡短的電子郵件，使用Company Services扼要回答他的需求，並試著將它導向 1000+ 的預算。",
+        "options": {
+          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容。\n- 輸出我不希望看到```html 等會影響收件者觀感的部分\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        640,
+        260
+      ],
+      "id": "60580381-9926-4e90-88b1-9dc70339cf7d",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        120
+      ],
+      "id": "688b00ef-facf-4027-894c-a7158a267e33",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "PrWhfyoEy4g6OEam",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        640,
+        600
+      ],
+      "id": "bdc1ee14-f813-4c2a-a381-b7f89375b9d4",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "PrWhfyoEy4g6OEam",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "用此資料庫回答公司相關問題"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        500
+      ],
+      "id": "630c3439-0e7b-419f-87f2-1527f24cfbb4",
+      "name": "Company Services"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        800,
+        660
+      ],
+      "id": "215c8542-35a2-4e48-8813-50fe55eaadec",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "veqmop5bNcr1x4wZ",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        800,
+        840
+      ],
+      "id": "e59ae940-bf27-426e-bfef-d5ef09e756cd",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "hUfi6i9Jf0VuFQbc",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## RAG\n",
+        "height": 540,
+        "width": 360
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        760,
+        460
+      ],
+      "id": "3ef5cbd1-071e-4a90-a5f9-12ce600dc087",
+      "name": "Sticky Note9"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "名子": "帥帥",
+          "姓氏": "康",
+          "Email": "aasdfghjkl129574ytw@gmail.com",
+          "Budget": "1000+ USD",
+          "需求": "雲市集工業館-AI工作庫 的適用對象是? 我是個線上高中數學老師，不知道AI工作庫是否能有效幫助我在課程上的製作",
+          "submittedAt": "2025-07-15T19:08:04.179+08:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Company Services",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Company Services": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Company Services",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c2b6ad7a-a11f-47a3-ada7-1f8206d07424",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9c6f883eb615917309290f122969cf5461067ac52caa9cee595122dc92ab9dcd"
+  },
+  "id": "ZBvdLarjiaxlUJlu",
+  "tags": []
+}
