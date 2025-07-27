@@ -20,15 +20,9 @@ This project uses n8n to orchestrate:
 
 | File Name | Description |
 |-----------|-------------|
-| `Tavily Agent Tool (Web Search).json` | Basic **Tavily HTTP request agent**, used for external knowledge enrichment |
-| `Form_sheet_Schedule_meeting_AI Agent.json` | Main flow that handles:  
-→ `RAG vector store creation`,  
-→ `budget filtering`,  
-→ `AI-generated responses`,  
-→ and `Cal.com meeting links` |
-| `Form_sheet_Schedule_meeting_AI Agent_web search (Using Tavily Agent Tool).json` | Handles **Webhook-triggered summary creation** using  
-→ `Tavily Web Search`  
-→ `AI summarization` before meetings |
+| `Tavily Agent Tool (Web Search).json` | 🔍 A basic **Tavily HTTP request agent** used for external knowledge enrichment |
+| `Form_sheet_Schedule_meeting_AI Agent.json` | 📌 Main flow responsible for: <br>– RAG vector store creation <br>– Client budget filtering <br>– AI-generated email responses <br>– Cal.com meeting link embedding |
+| `Form_sheet_Schedule_meeting_AI Agent_web search (Using Tavily Agent Tool).json` | 🔁 Handles **Webhook-triggered summary creation** using: <br>– Tavily Web Search <br>– AI summarization before meetings |
 
 ---
 
