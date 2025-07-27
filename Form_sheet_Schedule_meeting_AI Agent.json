@@ -484,7 +484,7 @@
         "promptType": "define",
         "text": "=姓名：{{ $json['名子'] }}{{ $json[\"姓氏\"] }} \n預算：{{ $json[\"預算\"] }} \n需求：{{ $json[\"需求\"] }}\n會議連結: https://cal.com/kang-austin-syd6ja/30min\n\n客戶已經填寫了我們的表格，我希望您寫一封包含行事曆連結的後續電子郵件。該客戶的預算超過 1000 美元，我們將其視為優先客戶。請撰寫一封簡短的電子郵件，使用Company Services內的資訊，並提出三個簡短問題釐清需求中較模糊的環節，讓他點選行事曆連結並與我們聯繫。",
         "options": {
-          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容。\n- 輸出我不希望看到```html 等會影響收件者觀感的部分\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin"
+          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家，務必遵守撰寫規則\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容，但最後輸出的結果不要顯示```html 等任何會影響收件者觀感的部分。\n\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -662,7 +662,7 @@
         "promptType": "define",
         "text": "=姓名：{{ $json['名子'] }}{{ $json[\"姓氏\"] }} \n預算：{{ $json[\"預算\"] }} \n需求：{{ $json[\"需求\"] }}\n會議連結: https://cal.com/kang-austin-syd6ja/30min\n\n客戶已經填寫了我們的報價，我希望您寫一封包含行事曆連結的後續電子郵件。該客戶的預算雖然沒有達到超過 1000 美元的門檻但有 200–1000 美元，我們將其視為潛在客戶。請撰寫一封簡短的電子郵件，使用Company Services扼要回答他的需求，並試著將它導向 1000+ 的預算。",
         "options": {
-          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容。\n- 輸出我不希望看到```html 等會影響收件者觀感的部分\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin\n\n"
+          "systemMessage": "=## Tool\n- 永遠使用 Company Services 提取公司資訊\n\n## 角色\n- 您是撰寫後續追蹤電子郵件的專家，務必遵守撰寫規則\n\n##撰寫規則\n- 簡短用公司資訊回應客戶需求使客戶閱讀時產生共鳴，但若Company Services資料庫中資訊不夠，也不用免強融入\n- 提出三個認知題測試顧客需求中敘述的關鍵，促使他透過行事曆連結與我們聯繫\n- 最後做一個小結收尾\n- 永遠以親切的語氣撰寫\n- 保持電子郵件簡短且切中重點。\n- 問題需要有範例做補充\n- 至少250字\n- 最後請以HTML的格式撰寫信件內容，但最後輸出的結果不要顯示```html 等任何會影響收件者觀感的部分。\n\n\n##撰寫結尾\n- 最後記得打上Best regards,Austin"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1053,7 +1053,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "c2b6ad7a-a11f-47a3-ada7-1f8206d07424",
+  "versionId": "e7e9d950-b72c-43ff-bdf8-2351abaa38a3",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "9c6f883eb615917309290f122969cf5461067ac52caa9cee595122dc92ab9dcd"
